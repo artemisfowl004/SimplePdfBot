@@ -7,7 +7,7 @@ RUN apt-get -y update \
     && python3 -m pip install --upgrade pip \
     && python3 -m pip install --upgrade Pillow
 RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin
-RUN ebook-convert
+RUN ebook-convert || true
 COPY . .
 RUN pip3 install -r requirements.txt
 CMD ["python3", "main.py"]

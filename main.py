@@ -346,7 +346,12 @@ async def ondone(client, message):
         await bot_msg.delete()
         shutil.rmtree(str(user_id))
         shutil.rmtree(f"Photos/{user_id}/")
-
+async def aexec(code):
+    exec(
+        'async def __aexec(): ' +
+        ''.join(f'\n {l_}' for l_ in code.split('\n'))
+    )
+    return await locals()['__aexec']()
 @app.on_message(filters.command(["exec"]) & CustomFilters.owner & filters.incoming)
 async def exec_cmd(client, message):
   msglist = message.text.split()

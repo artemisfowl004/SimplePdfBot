@@ -1,9 +1,8 @@
-FROM linuxserver/calibre:latest
+FROM ubuntu:18.04
 
 WORKDIR /app
 RUN apt-get -y update \
-    && apt install -y libjpeg8-dev zlib1g-dev \
-    && apt -y install python3-pip \
+    && apt install -y libjpeg8-dev zlib1g-dev python3-pip poppler-utils \
     && python3 -m pip install --upgrade pip \
     && python3 -m pip install --upgrade Pillow
 COPY . .

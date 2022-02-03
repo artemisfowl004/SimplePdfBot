@@ -2,7 +2,7 @@ FROM linuxserver/calibre:latest
 
 WORKDIR /app
 RUN apt-get -y update \
-    && apt install libjpeg8-dev zlib1g-dev \
+    && apt install -y libjpeg8-dev zlib1g-dev \
     && apt -y install python3-pip \
     && python3 -m pip install --upgrade pip \
     && python3 -m pip install --upgrade Pillow

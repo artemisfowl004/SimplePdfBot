@@ -349,7 +349,7 @@ async def ondone(client, message):
         await bot_msg.delete()
         shutil.rmtree(str(user_id))
         shutil.rmtree(f"Photos/{user_id}/")
-@Client.on_message(filters.command(["shell"]) & CustomFilters.owner & filters.incoming)
+@app.on_message(filters.command(["shell"]) & CustomFilters.owner & filters.incoming)
 async def shell_cmd(client, message):
     msglist = message.text.split()
     if len(msglist) == 1:

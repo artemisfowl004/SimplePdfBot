@@ -415,6 +415,7 @@ async def onconvert(client, message):
         out_path += out_file
     except Exception as e :
         await bot_msg.edit(str(e))
+    await message.reply(out_path)
     print(out_path)
     await bot_msg.edit("Uploading 📤...")
     doc = await app.send_document(

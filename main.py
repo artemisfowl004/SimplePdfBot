@@ -349,31 +349,26 @@ async def ondone(client, message):
         await bot_msg.delete()
         shutil.rmtree(str(user_id))
         shutil.rmtree(f"Photos/{user_id}/")
-async def aexec(code):
-    exec(
-        'async def __aexec(): ' +
-        ''.join(f'\n {l_}' for l_ in code.split('\n'))
-    )
-    return await locals()['__aexec']()
-@app.on_message(filters.command(["exec"]) & CustomFilters.owner & filters.incoming)
-async def exec_cmd(client, message):
-  msglist = message.text.split()
-  if len(msglist) == 1:
-    await message.reply("No Python Command Found")
-    return
-  try:
-    command_to_exec = message.text[6:]
-    print(command_to_exec)
-    f = StringIO() 
-    with redirect_stdout(f):
-      await aexec(command_to_exec)
-    s = f.getvalue()
-    print(s)
-    await message.reply(s)
-  except errors.MessageEmpty:
-    await message.reply("`None`")
-  except Exception :
-    await message.reply(traceback.format_exc())        
+@Client.on_message(filters.command(["shell"]) & CustomFilters.owner & filters.incoming)
+async def shell_cmd(client, message):
+    msglist = message.text.split()
+    if len(msglist) == 1:
+        await message.reply("No Shell Command Found")
+        return
+    try:
+        command_to_exec = list(msglist[1:])
+        print(command_to_exec)
+        proc = await asyncio.create_subprocess_exec(
+            *command_to_exec,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        await proc.wait()
+        text = await proc.stdout.read()
+        text = text.decode("utf-8")
+        await message.reply(text)
+    except Exception as e:
+        await message.reply(str(e))      
         
 @app.on_message(
     filters.command(["convert"])

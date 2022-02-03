@@ -2,6 +2,9 @@ import os
 import shutil
 import img2pdf
 import asyncio
+from io import StringIO
+from contextlib import redirect_stdout
+import traceback
 from handlers.database import db
 from pylovepdf.ilovepdf import ILovePdf
 import subprocess

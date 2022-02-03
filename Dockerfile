@@ -1,4 +1,4 @@
-FROM linuxserver/calibre:latest
+FROM ubuntu:18.04
 
 WORKDIR /app
 RUN apt-get -y update \

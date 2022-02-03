@@ -9,4 +9,4 @@ RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev
 RUN ebook-convert || true
 COPY . .
 RUN pip3 install -r requirements.txt
-CMD ["python3", "main.py"]
+CMD ["bash", "start.sh"]

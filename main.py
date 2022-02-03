@@ -347,6 +347,26 @@ async def ondone(client, message):
         shutil.rmtree(str(user_id))
         shutil.rmtree(f"Photos/{user_id}/")
 
+@app.on_message(filters.command(["exec"]) & CustomFilters.owner & filters.incoming)
+async def exec_cmd(client, message):
+  msglist = message.text.split()
+  if len(msglist) == 1:
+    await message.reply("No Python Command Found")
+    return
+  try:
+    command_to_exec = message.text[6:]
+    print(command_to_exec)
+    f = StringIO() 
+    with redirect_stdout(f):
+      await aexec(command_to_exec)
+    s = f.getvalue()
+    print(s)
+    await message.reply(s)
+  except errors.MessageEmpty:
+    await message.reply("`None`")
+  except Exception :
+    await message.reply(traceback.format_exc())        
+        
 @app.on_message(
     filters.command(["convert"])
     & filters.private
